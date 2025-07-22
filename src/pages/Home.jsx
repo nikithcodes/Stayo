@@ -1,216 +1,288 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import SplitText from '../components/animations/SplitText';
+import BlurText from '../components/animations/BlurText';
+import GradientText from '../components/animations/GradientText';
+import ScrollFloat from '../components/animations/ScrollFloat';
 
-export default function Home() {
+const Home = () => {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [checkIn, setCheckIn] = useState('');
+  const [checkOut, setCheckOut] = useState('');
+  const [guests, setGuests] = useState(1);
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/hotels?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
+  const popularDestinations = [
+    {
+      name: 'Mumbai',
+      image: '/mumbai.avif',
+      hotels: '2,500+ hotels'
+    },
+    {
+      name: 'Delhi',
+      image: '/delhi.avif',
+      hotels: '3,200+ hotels'
+    },
+    {
+      name: 'Bangalore',
+      image: 'bangalore.avif',
+      hotels: '1,800+ hotels'
+    },
+    {
+      name: 'Goa',
+      image: 'goa.avif',
+      hotels: '900+ hotels'
+    }
+  ];
+
+  const topHotels = [
+    {
+      name: 'The Oberoi Mumbai',
+      location: 'Marine Drive, Mumbai',
+      price: '₹25,000',
+      rating: 4.8,
+      image: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625'
+    },
+    {
+      name: 'ITC Grand Central',
+      location: 'Parel, Mumbai',
+      price: '₹18,000',
+      rating: 4.6,
+      image: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742'
+    },
+    {
+      name: 'Le Meridien',
+      location: 'Connaught Place, Delhi',
+      price: '₹22,000',
+      rating: 4.7,
+      image: 'https://images.unsplash.com/photo-1493397212122-2b85dda8106b'
+    }
+  ];
+
   return (
-    <>
-      \
-      <div className="hero">
-        <div className="hero-overlay">
-          <h1 className="hero-title">Discover Your Perfect Stay</h1>
-          <p className="hero-subtitle">Find and book accommodations around the world</p>
-        </div>
-
-        <div className="search-container">
-          <div className="search-box">
-            <input type="text" placeholder="Where are you going?" />
-            <input type="date" />
-            <input type="date" />
-            <input type="number" min="1" defaultValue={1} />
-            <button className="search-btn">Search</button>
-          </div>
-        </div>
-      </div>
-
+    <div className="app">
+      <Navbar />
       
-      <section className="destinations">
-        <div className="destinations-header">
-          <h2>Popular Destinations</h2>
-          <button className="view-all">View All</button>
-        </div>
+      {/* Hero Section */}
+      <section className="hero">
+        <div className="hero-content">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <SplitText 
+              className="hero-title"
+              delay={0.5}
+            >
+              Discover Your Perfect Stay
+            </SplitText>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1 }}
+          >
+            <BlurText 
+              className="hero-subtitle"
+              delay={1.2}
+            >
+              Find and book accommodations around the world
+            </BlurText>
+          </motion.div>
 
-        <div className="card-grid">
-          {[
-            { city: "New York", country: "USA", count: 147, img: "/images/newyork.avif" },
-            { city: "Miami", country: "USA", count: 83, img: "/images/miami.avif" },
-            { city: "Paris", country: "France", count: 218, img: "/images/paris.avif" },
-            { city: "San Francisco", country: "USA", count: 112, img: "/images/sanfrancio.avif" },
-            { city: "London", country: "UK", count: 95, img: "/images/london.avif" },
-            { city: "Tokyo", country: "Japan", count: 121, img: "/images/tokyo.avif" },
-          ].map((item, index) => (
-            <div className="destination-card" key={index}>
-              <img src={item.img} alt={`${item.city}, ${item.country}`} />
-              <div className="card-overlay">
-                <h3>{item.city}</h3>
-                <p>{item.country}</p>
-                <p className="property-count">{item.count} properties</p>
-              </div>
+          {/* Search Bar */}
+          <motion.div
+            className="search-container"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 1.5 }}
+          >
+            <div className="search-form">
+              <input
+                type="text"
+                placeholder="Where are you going?"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input location-input"
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              />
+              <input
+                type="date"
+                placeholder="dd/mm/yyyy"
+                value={checkIn}
+                onChange={(e) => setCheckIn(e.target.value)}
+                className="search-input date-input"
+              />
+              <input
+                type="date"
+                placeholder="dd/mm/yyyy"
+                value={checkOut}
+                onChange={(e) => setCheckOut(e.target.value)}
+                className="search-input date-input"
+              />
+              <input
+                type="number"
+                min="1"
+                value={guests}
+                onChange={(e) => setGuests(e.target.value)}
+                className="search-input guests-input"
+              />
+              <button 
+                onClick={handleSearch}
+                className="search-btn"
+              >
+                Search
+              </button>
             </div>
-          ))}
+          </motion.div>
         </div>
       </section>
 
-      
-      <style>{`
-        .hero {
-          height: 80vh;
-          background-image: url('/home.avif');
-          background-size: cover;
-          background-position: center;
-          position: relative;
-        }
+      {/* Popular Destinations */}
+      <section className="section">
+        <div className="container">
+          <div className="section-header">
+            <ScrollFloat>
+              <SplitText className="section-title">
+                Popular Destinations
+              </SplitText>
+            </ScrollFloat>
+            <a href="/hotels" className="view-all-link">View All</a>
+          </div>
 
-        .hero-overlay {
-          background-color: rgba(0, 0, 0, 0.5);
-          color: white;
-          padding: 40px 20px 120px;
-          text-align: center;
-        }
+          <div className="grid grid-4">
+            {popularDestinations.map((destination, index) => (
+              <motion.div
+                key={destination.name}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05 }}
+                className="card"
+                onClick={() => navigate(`/hotels?search=${destination.name}`)}
+              >
+                <img
+                  src={destination.image}
+                  alt={destination.name}
+                  className="card-image"
+                />
+                <div className="card-content">
+                  <h3 className="card-title">{destination.name}</h3>
+                  <p className="card-text">{destination.hotels}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        .hero-title {
-          font-size: 3rem;
-          font-weight: bold;
-        }
+      {/* Top Rated Hotels */}
+      <section className="section section-gray">
+        <div className="container">
+          <div className="section-header">
+            <ScrollFloat>
+              <SplitText className="section-title">
+                Top Rated Hotels
+              </SplitText>
+            </ScrollFloat>
+            <a href="/hotels" className="view-all-link">View All</a>
+          </div>
 
-        .hero-subtitle {
-          font-size: 1.2rem;
-        }
+          <div className="grid grid-3">
+            {topHotels.map((hotel, index) => (
+              <motion.div
+                key={hotel.name}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.03 }}
+                className="card"
+              >
+                <img
+                  src={hotel.image}
+                  alt={hotel.name}
+                  className="card-image"
+                />
+                <div className="card-content">
+                  <div className="card-header">
+                    <h3 className="card-title">{hotel.name}</h3>
+                    <span className="rating-badge">
+                      ★ {hotel.rating}
+                    </span>
+                  </div>
+                  <p className="card-text">{hotel.location}</p>
+                  <div className="card-footer">
+                    <span className="card-price">
+                      {hotel.price}
+                    </span>
+                    <button className="btn btn-secondary">View Details</button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        .search-container {
-          position: absolute;
-          bottom: -40px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 10;
-          width: 100%;
-          max-width: 1000px;
-          padding: 0 20px;
-        }
-
-        .search-box {
-          background: white;
-          border-radius: 12px;
-          padding: 20px;
-          display: flex;
-          gap: 12px;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-          flex-wrap: wrap;
-        }
-
-        .search-box input {
-          flex: 1;
-          min-width: 160px;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 6px;
-        }
-
-        .search-btn {
-          background-color: #2563eb;
-          color: white;
-          padding: 10px 20px;
-          border: none;
-          border-radius: 6px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-
-        .search-btn:hover {
-          background-color: #1e40af;
-          box-shadow: 0 0 12px #3b82f6;
-        }
-
-        .destinations {
-          margin-top: 80px;
-          padding: 40px 20px;
-          max-width: 1200px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .destinations-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 24px;
-        }
-
-        .view-all {
-          border: 1px solid #2563eb;
-          color: #2563eb;
-          background: transparent;
-          padding: 6px 14px;
-          border-radius: 6px;
-          cursor: pointer;
-        }
-
-        .card-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
-        }
-
-        .destination-card {
-          border-radius: 12px;
-          overflow: hidden;
-          position: relative;
-          box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-          transition: transform 0.3s ease;
-        }
-
-        .destination-card:hover {
-          transform: scale(1.02);
-        }
-
-        .destination-card img {
-          width: 100%;
-          height: 220px;
-          object-fit: cover;
-          display: block;
-        }
-
-        .card-overlay {
-          position: absolute;
-          bottom: 0;
-          width: 100%;
-          padding: 16px;
-          background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-          color: white;
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          transition: color 0.3s ease;
-        }
-
-        .destination-card:hover .card-overlay {
-          color: #e0f2fe;
-        }
-
-        .card-overlay h3,
-        .card-overlay p {
-          margin: 0;
-          transform: translateY(10px);
-          opacity: 0.8;
-          transition: all 0.4s ease;
-        }
-
-        .destination-card:hover .card-overlay h3,
-        .destination-card:hover .card-overlay p {
-          transform: translateY(0px);
-          opacity: 1;
-        }
-
-        .card-overlay .property-count {
-          font-weight: bold;
-          transition: color 0.3s ease;
-        }
-
-        .destination-card:hover .card-overlay .property-count {
-          color: #7dd3fc;
-        }
-      `}</style>
-    </>
+      {/* Footer */}
+      <footer className="footer">
+        {/* <div className="container">
+          <div className="footer-grid">
+            <div className="footer-section">
+              <h3>
+                <GradientText>Stayo</GradientText>
+              </h3>
+              <p>
+                Your gateway to extraordinary travel experiences around the world.
+              </p>
+            </div>
+            <div className="footer-section">
+              <h3>Quick Links</h3>
+              <ul>
+                <li><a href="/hotels">Hotels</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact</a></li>
+              </ul>
+            </div>
+            <div className="footer-section">
+              <h3>Support</h3>
+              <ul>
+                <li><a href="/">Help Center</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/">Privacy Policy</a></li>
+              </ul>
+            </div>
+            <div className="footer-section">
+              <h3>Follow Us</h3>
+              <div className="social-links">
+                <a href="/">Twitter</a>
+                <a href="/">Instagram</a>
+                <a href="/">Facebook</a>
+              </div>
+            </div>
+          </div> */}
+          <div className="footer-bottom">
+            <p>&copy; 2025 Stayo. All rights reserved.</p>
+          </div>
+        
+      </footer>
+    </div>
   );
-}
+};
+
+export default Home;
 
 
 
