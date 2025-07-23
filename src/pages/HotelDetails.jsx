@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import Navbar from './../components/Navbar';
+import Navbar from '../components/Navbar';
 import SplitText from '../components/animations/SplitText';
 
 const HotelDetails = () => {

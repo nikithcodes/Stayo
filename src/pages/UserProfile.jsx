@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from './../components/Navbar';
+import Navbar from '../components/Navbar';
 import SplitText from '../components/animations/SplitText';
 import { useAuth } from '../contexts/AuthContext';
 
