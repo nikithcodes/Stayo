@@ -1,8 +1,8 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
+import supabase from '../../supabaseClient'; // Adjust the path if needed
 
 const Navbar = () => {
   const { user, login, register, logout, isAuthenticated } = useAuth();
@@ -15,20 +15,35 @@ const Navbar = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await login(loginForm.email, loginForm.password);
+      const { error } = await supabase.auth.signInWithPassword({
+        email: loginForm.email,
+        password: loginForm.password,
+      });
+      if (error) throw error;
       setIsLoginOpen(false);
+      // Optionally, refresh user state here
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error('Login failed:', error.message);
+      // Optionally, show error to user
     }
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await register(registerForm.name, registerForm.email, registerForm.password);
+      const { error } = await supabase.auth.signUp({
+        email: registerForm.email,
+        password: registerForm.password,
+        options: {
+          data: { name: registerForm.name }
+        }
+      });
+      if (error) throw error;
       setIsRegisterOpen(false);
+      // Optionally, refresh user state here
     } catch (error) {
-      console.error('Registration failed:', error);
+      console.error('Registration failed:', error.message);
+      // Optionally, show error to user
     }
   };
 
