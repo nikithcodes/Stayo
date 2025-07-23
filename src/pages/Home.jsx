@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './../components/Navbar';
 import SplitText from '../components/animations/SplitText';

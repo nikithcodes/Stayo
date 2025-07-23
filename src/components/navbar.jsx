@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import supabase from '../../supabaseClient'; // Adjust the path if needed
 
 const Navbar = () => {
-  const { user, login, register, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
