@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion'; // ✅ Added missing import
 import { useAuth } from '../contexts/AuthContext';
-import supabase from '../../supabaseClient'; // Adjust the path if needed
+import supabase from '../../supabaseClient';
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({ name: '', email: '', password: '' });
 
@@ -20,10 +23,8 @@ const Navbar = () => {
       });
       if (error) throw error;
       setIsLoginOpen(false);
-      // Optionally, refresh user state here
     } catch (error) {
       console.error('Login failed:', error.message);
-      // Optionally, show error to user
     }
   };
 
@@ -34,15 +35,13 @@ const Navbar = () => {
         email: registerForm.email,
         password: registerForm.password,
         options: {
-          data: { name: registerForm.name }
-        }
+          data: { name: registerForm.name },
+        },
       });
       if (error) throw error;
       setIsRegisterOpen(false);
-      // Optionally, refresh user state here
     } catch (error) {
       console.error('Registration failed:', error.message);
-      // Optionally, show error to user
     }
   };
 
@@ -52,7 +51,7 @@ const Navbar = () => {
   };
 
   return (
-    <motion.nav 
+    <motion.nav
       className="navbar"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -60,22 +59,19 @@ const Navbar = () => {
     >
       <div className="container">
         <div className="navbar-content">
-          <Link to="/" className="logo">
-            Stayo
-          </Link>
+          <Link to="/" className="logo">Stayo</Link>
 
           <ul className="nav-links">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/hotels">Hotels</Link></li>
             <li><Link to="/about">About</Link></li>
-            
           </ul>
 
           <div className="auth-buttons">
             {isAuthenticated ? (
               <>
                 <Link to="/user" className="btn btn-secondary">
-                  Hi, {user?.name}
+                  Hi, {user?.user_metadata?.name || user?.email}
                 </Link>
                 <button onClick={handleLogout} className="btn btn-primary">
                   Logout
@@ -83,10 +79,17 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <button onClick={() => setIsLoginOpen(true)} className="btn btn-secondary" style={{border:"none"}}>
+                <button
+                  onClick={() => setIsLoginOpen(true)}
+                  className="btn btn-secondary"
+                  style={{ border: "none" }}
+                >
                   Login
                 </button>
-                <button onClick={() => setIsRegisterOpen(true)} className="btn btn-primary">
+                <button
+                  onClick={() => setIsRegisterOpen(true)}
+                  className="btn btn-primary"
+                >
                   Sign Up
                 </button>
               </>
@@ -98,7 +101,7 @@ const Navbar = () => {
       {/* Login Modal */}
       {isLoginOpen && (
         <div className="modal-overlay" onClick={() => setIsLoginOpen(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2 className="modal-title">Login to Stayo</h2>
             <form onSubmit={handleLogin}>
               <div className="form-group">
@@ -107,7 +110,9 @@ const Navbar = () => {
                   type="email"
                   className="form-input"
                   value={loginForm.email}
-                  onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
+                  onChange={(e) =>
+                    setLoginForm({ ...loginForm, email: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -117,7 +122,9 @@ const Navbar = () => {
                   type="password"
                   className="form-input"
                   value={loginForm.password}
-                  onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                  onChange={(e) =>
+                    setLoginForm({ ...loginForm, password: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -132,7 +139,7 @@ const Navbar = () => {
       {/* Register Modal */}
       {isRegisterOpen && (
         <div className="modal-overlay" onClick={() => setIsRegisterOpen(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2 className="modal-title">Join Stayo</h2>
             <form onSubmit={handleRegister}>
               <div className="form-group">
@@ -141,7 +148,9 @@ const Navbar = () => {
                   type="text"
                   className="form-input"
                   value={registerForm.name}
-                  onChange={(e) => setRegisterForm({ ...registerForm, name: e.target.value })}
+                  onChange={(e) =>
+                    setRegisterForm({ ...registerForm, name: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -151,7 +160,9 @@ const Navbar = () => {
                   type="email"
                   className="form-input"
                   value={registerForm.email}
-                  onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
+                  onChange={(e) =>
+                    setRegisterForm({ ...registerForm, email: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -161,7 +172,9 @@ const Navbar = () => {
                   type="password"
                   className="form-input"
                   value={registerForm.password}
-                  onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
+                  onChange={(e) =>
+                    setRegisterForm({ ...registerForm, password: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -177,4 +190,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
