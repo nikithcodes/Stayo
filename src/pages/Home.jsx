@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Navbar from './../components/Navbar';
 import SplitText from '../components/animations/SplitText';
 import BlurText from '../components/animations/BlurText';
@@ -19,26 +20,10 @@ const Home = () => {
   };
 
   const popularDestinations = [
-    {
-      name: 'Mumbai',
-      image: '/mumbai.avif',
-      hotels: '2,500+ hotels'
-    },
-    {
-      name: 'Delhi',
-      image: '/delhi.avif',
-      hotels: '3,200+ hotels'
-    },
-    {
-      name: 'Bangalore',
-      image: 'bangalore.avif',
-      hotels: '1,800+ hotels'
-    },
-    {
-      name: 'Goa',
-      image: 'goa.avif',
-      hotels: '900+ hotels'
-    }
+    { name: 'Mumbai', image: '/mumbai.avif', hotels: '2,500+ hotels' },
+    { name: 'Delhi', image: '/delhi.avif', hotels: '3,200+ hotels' },
+    { name: 'Bangalore', image: '/bangalore.avif', hotels: '1,800+ hotels' },
+    { name: 'Goa', image: '/goa.avif', hotels: '900+ hotels' }
   ];
 
   const topHotels = [
@@ -68,7 +53,7 @@ const Home = () => {
   return (
     <div className="app">
       <Navbar />
-      
+
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
@@ -77,23 +62,17 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <SplitText 
-              className="hero-title"
-              delay={0.5}
-            >
+            <SplitText className="hero-title" delay={0.5}>
               Discover Your Perfect Stay
             </SplitText>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1 }}
           >
-            <BlurText 
-              className="hero-subtitle"
-              delay={1.2}
-            >
+            <BlurText className="hero-subtitle" delay={1.2}>
               Find and book accommodations around the world
             </BlurText>
           </motion.div>
@@ -116,14 +95,12 @@ const Home = () => {
               />
               <input
                 type="date"
-                placeholder="dd/mm/yyyy"
                 value={checkIn}
                 onChange={(e) => setCheckIn(e.target.value)}
                 className="search-input date-input"
               />
               <input
                 type="date"
-                placeholder="dd/mm/yyyy"
                 value={checkOut}
                 onChange={(e) => setCheckOut(e.target.value)}
                 className="search-input date-input"
@@ -135,10 +112,7 @@ const Home = () => {
                 onChange={(e) => setGuests(e.target.value)}
                 className="search-input guests-input"
               />
-              <button 
-                onClick={handleSearch}
-                className="search-btn"
-              >
+              <button onClick={handleSearch} className="search-btn">
                 Search
               </button>
             </div>
@@ -151,11 +125,11 @@ const Home = () => {
         <div className="container">
           <div className="section-header">
             <ScrollFloat>
-              <SplitText className="section-title">
-                Popular Destinations
-              </SplitText>
+              <SplitText className="section-title">Popular Destinations</SplitText>
             </ScrollFloat>
-            <a href="/hotels" className="view-all-link">View All</a>
+            <a href="/hotels" className="view-all-link">
+              View All
+            </a>
           </div>
 
           <div className="grid grid-4">
@@ -190,11 +164,11 @@ const Home = () => {
         <div className="container">
           <div className="section-header">
             <ScrollFloat>
-              <SplitText className="section-title">
-                Top Rated Hotels
-              </SplitText>
+              <SplitText className="section-title">Top Rated Hotels</SplitText>
             </ScrollFloat>
-            <a href="/hotels" className="view-all-link">View All</a>
+            <a href="/hotels" className="view-all-link">
+              View All
+            </a>
           </div>
 
           <div className="grid grid-3">
@@ -208,23 +182,15 @@ const Home = () => {
                 whileHover={{ scale: 1.03 }}
                 className="card"
               >
-                <img
-                  src={hotel.image}
-                  alt={hotel.name}
-                  className="card-image"
-                />
+                <img src={hotel.image} alt={hotel.name} className="card-image" />
                 <div className="card-content">
                   <div className="card-header">
                     <h3 className="card-title">{hotel.name}</h3>
-                    <span className="rating-badge">
-                      ★ {hotel.rating}
-                    </span>
+                    <span className="rating-badge">★ {hotel.rating}</span>
                   </div>
                   <p className="card-text">{hotel.location}</p>
                   <div className="card-footer">
-                    <span className="card-price">
-                      {hotel.price}
-                    </span>
+                    <span className="card-price">{hotel.price}</span>
                     <button className="btn btn-secondary">View Details</button>
                   </div>
                 </div>
@@ -236,52 +202,12 @@ const Home = () => {
 
       {/* Footer */}
       <footer className="footer">
-        {/* <div className="container">
-          <div className="footer-grid">
-            <div className="footer-section">
-              <h3>
-                <GradientText>Stayo</GradientText>
-              </h3>
-              <p>
-                Your gateway to extraordinary travel experiences around the world.
-              </p>
-            </div>
-            <div className="footer-section">
-              <h3>Quick Links</h3>
-              <ul>
-                <li><a href="/hotels">Hotels</a></li>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/contact">Contact</a></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h3>Support</h3>
-              <ul>
-                <li><a href="/">Help Center</a></li>
-                <li><a href="/contact">Contact Us</a></li>
-                <li><a href="/">Privacy Policy</a></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h3>Follow Us</h3>
-              <div className="social-links">
-                <a href="/">Twitter</a>
-                <a href="/">Instagram</a>
-                <a href="/">Facebook</a>
-              </div>
-            </div>
-          </div> */}
-          <div className="footer-bottom">
-            <p>&copy; 2025 Stayo. All rights reserved.</p>
-          </div>
-        
+        <div className="footer-bottom">
+          <p>&copy; 2025 Stayo. All rights reserved.</p>
+        </div>
       </footer>
     </div>
   );
 };
 
 export default Home;
-
-
-
-
