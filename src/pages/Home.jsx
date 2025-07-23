@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from './../components/Navbar';
 import SplitText from '../components/animations/SplitText';
 import BlurText from '../components/animations/BlurText';
-import GradientText from '../components/animations/GradientText';
 import ScrollFloat from '../components/animations/ScrollFloat';
 
 const Home = () => {
