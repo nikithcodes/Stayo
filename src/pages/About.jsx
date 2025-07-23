@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Navbar from '../components/Navbar';
+import Navbar from './../components/Navbar';
 import SplitText from '../components/animations/SplitText';
 import BlurText from '../components/animations/BlurText';
 import ScrollFloat from '../components/animations/ScrollFloat';
@@ -13,7 +13,7 @@ const About = () => {
     { number: '50+', label: 'Destinations' }
   ];
 
-  
+
   const features = [
     {
       title: 'Best Price Guarantee',
