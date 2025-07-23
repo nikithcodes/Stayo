@@ -13,6 +13,7 @@ const About = () => {
     { number: '50+', label: 'Destinations' }
   ];
 
+  
   const features = [
     {
       title: 'Best Price Guarantee',
