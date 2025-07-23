@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import Navbar from './../components/Navbar';
 import SplitText from '../components/animations/SplitText';
 import BlurText from '../components/animations/BlurText';
 import GradientText from '../components/animations/GradientText';
